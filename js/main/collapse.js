@@ -80,7 +80,7 @@ function updateTempCollapse() {
 }
 
 function collapseMile1Eff() {
-	return new ExpantaNum(100).div(player.distance.plus(1).pow(0.06989).plus(1).min(50))
+	return new ExpantaNum(100).div(player.distance.plus(1).pow(0.04613).plus(1).min(50))
 }
 
 function collapseMile5Eff() {
@@ -97,7 +97,7 @@ function collapseMile8Eff() {
 
 function collapseMile10Eff() {
 	let exp = 8
-	if (modeActive("extreme")) exp = 3
+	if (modeActive("extreme") || getMinusId() > 0.5) exp = 3
 	let eff = player.collapse.lifeEssence.plus(1).log10().plus(1).sqrt().pow(exp);
 	if (eff.gte(40)) eff = eff.times(2.5).log10().times(20);
 	if (hasDE(5)) if ((player.elementary.theory.tree.upgrades[27]||new ExpantaNum(0)).gte(1)) {
@@ -115,6 +115,7 @@ function getCadaverGainMult() {
 	if (tmp.ach[65].has) mult = mult.times(1.4);
 	if (tmp.ach[131].has) mult = mult.times(2);
 	if (player.tr.upgrades.includes(14) && !HCCBA("noTRU")) mult = mult.times(tr14Eff()["cd"]);
+	if (player.tr.upgrades.includes(45) && getMinusId() > 0.5 && !HCCBA("noTRU")) mult = mult.times(player.pathogens.amount.add(1).log10().pow(1.25));
 	if (tmp.inf) if (tmp.inf.upgs.has("3;2")) mult = mult.times(INF_UPGS.effects["3;2"]()["cadavers"]);
 	if (tmp.collapse) if (modeActive("extreme") && (tmp.collapse.layer.gain.gte(10) || (tmp.clghm && tmp.collapse.layer.gain.gte(5)))) {
 		mult = mult.div(2);

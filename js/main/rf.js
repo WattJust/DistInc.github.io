@@ -1,6 +1,6 @@
 function getFuelPow() {
 	let pow = new ExpantaNum(1);
-	if (player.tr.upgrades.includes(5) && !HCCBA("noTRU")) pow = pow.times(1.1 - (modeActive("NG-") ? 0.07 : 0));
+	if (player.tr.upgrades.includes(5) && !HCCBA("noTRU")) pow = pow.times(1 + 0.1 / getMinusNerf("vanillaTimeUpgrades") - (modeActive("NG-") && !getMinusId() > 0.5 ? 0.07 : 0));
 	return pow
 }
 

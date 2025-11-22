@@ -24,8 +24,10 @@ function updatePathogensGain(){
 	}
 	if (modeActive("hard")) tmp.pathogens.gain = tmp.pathogens.gain.div(3);
 	if (modeActive("easy")) tmp.pathogens.gain = tmp.pathogens.gain.times(2.4);
+	tmp.pathogens.gain = tmp.pathogens.gain.div(getMinusNerf("PathogenGain"));
 	tmp.pathogens.gain = tmp.pathogens.gain.times(pathogenUpg5Eff());
 	if (player.tr.upgrades.includes(25)&&modeActive("extreme")) tmp.pathogens.gain = tmp.pathogens.gain.times(5)
+	if (player.tr.upgrades.includes(43) && getMinusId() > 0.5) tmp.pathogens.gain = tmp.pathogens.gain.times(player.amoebas.amount.add(1).log10().pow(0.4))
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.ferm.quarkR("strange").max(1));
@@ -39,7 +41,7 @@ function updatePathogensGain(){
 
 function updateTempPathogens() {
 	if (!tmp.pathogens) tmp.pathogens = {};
-	tmp.pathogens.lrm = new ExpantaNum(1);
+	tmp.pathogens.lrm = ExpantaNum(getMinusNerf("PathogenRequirement"));
 	if (modeActive("hard")) tmp.pathogens.lrm = tmp.pathogens.lrm.div(5);
 	if (modeActive("extreme")) tmp.pathogens.lrm = tmp.pathogens.lrm.times(20);
 	tmp.pathogens.upgPow = new ExpantaNum(1);
@@ -48,10 +50,12 @@ function updateTempPathogens() {
 		tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(
 			TR_UPGS[27].current()
 		);
+	if (player.tr.upgrades.includes(47) && getMinusId() > 0.5 && !HCCBA("noTRU")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(player.amoebas.amount.plus(1).times(10).slog(10).sub(1).div(10).max(0))
 	if (modeActive("hard")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.98);
 	if (modeActive("easy")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(1.089);
 	if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.dc.coreEff.max(0));
 	if (modeActive('extreme')) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8);
+	tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(getMinusNerf("PathogenUpgrades"));
 	if (tmp.inf) if (tmp.inf.upgs.has("3;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.1);
 	if (tmp.inf) if (tmp.inf.upgs.has("5;2")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05);
 	if (tmp.inf) if (tmp.inf.upgs.has("6;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.025);

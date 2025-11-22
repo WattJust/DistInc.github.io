@@ -176,7 +176,7 @@ function updateRobotsHTML(){
 			)
 		});
 	}
-	tmp.el.rankCheapbot.setDisplay(modeActive("extreme"));
+	tmp.el.rankCheapbot.setDisplay(modeActive("extreme") || getMinusId() > 0.5 || modeActive("elemRankCheap"));
 	tmp.el.fuelbot.setDisplay(
 		hasCollapseMilestone(5) ||
 			(player.automation.robots.fuelbot ? player.automation.robots.fuelbot[1].gt(0) : false)
@@ -246,7 +246,7 @@ function updateTimeReversalHTML(){
 			if (!tr11Pow().eq(1) && i == 11)
 				desc += "<span class='grossminitxt'>(^" + showNum(tr11Pow()) + ")</span>";
 			tmp.el["tr" + i].setHTML(desc + "<br>Cost: " + showNum(upg.cost()) + " Time Cubes.");
-			if (upg.current !== undefined && (i > 15 ? modeActive("extreme") : true))
+			if (upg.current !== undefined && (i > 15 && i < 36 ? modeActive("extreme") : true))
 				tmp.el["tr" + i].setTooltip("Currently: " + upg.disp(upg.current()));
 			tmp.el["tr" + i].setClasses({
 				btn: true,
@@ -260,6 +260,9 @@ function updateTimeReversalHTML(){
 		tmp.el.trRow5.setDisplay(modeActive("extreme") && player.collapse.unl);
 		tmp.el.trRow6.setDisplay(modeActive("extreme") && player.dc.unl);
 		tmp.el.trRow7.setDisplay(modeActive("extreme") && player.inf.endorsements.gt(0))
+		tmp.el.trRow8.setDisplay(getMinusId() > 0.5);
+		tmp.el.trRow9.setDisplay(getMinusId() > 0.5 && tmp.ach[62].has);
+		tmp.el.trRow10.setDisplay(getMinusId() > 0.5 && player.dc.cores.gt(1));
 	}
 }
 
@@ -1445,6 +1448,13 @@ function updateNgmmHtml() {
 	if (player.tab === "amoebas") {
 		tmp.el.amoebaamount.setTxt(showNum(player.amoebas.amount))
 		tmp.el.amoebaspersec.setTxt(showNum(getAmoebaGain()))
+		        
+    if (amoebasUnlocked() && tmp.amoebas && !tmp.amoebas.upgPow.eq(1)) {
+            tmp.el.amoebaUpgPow.setTxt("Upgrade Power: " + showNum(tmp.amoebas.upgPow.times(100)) + "%");
+            tmp.el.amoebaUpgPow.setDisplay(true);
+        } else {
+            tmp.el.amoebaUpgPow.setDisplay(false);
+        }
 
 		let html = ""
 

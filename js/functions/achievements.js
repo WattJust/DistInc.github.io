@@ -10,8 +10,8 @@ function checkR1Ach(){
 }
 
 function checkR2Ach(){
-	if (player.distance.gte(modeActive("extreme") ? 3e4 : 5e5)) tmp.ach[21].grant();
-	if (player.rank.gte(modeActive("extreme") ? 6 : 8)) tmp.ach[22].grant();
+	if (player.distance.gte(modeActive("extreme") ? 3e4 : 3e4)) tmp.ach[21].grant();
+	if (player.rank.gte(modeActive("extreme")  ? 6 : 7)) tmp.ach[22].grant();
 	if (player.tier.gte(3)) tmp.ach[23].grant();
 	if (player.rockets.gte(2)) tmp.ach[24].grant();
 	if (player.rf.gte(2)) tmp.ach[25].grant();
@@ -22,8 +22,8 @@ function checkR2Ach(){
 
 function checkR3Ach(){
 	if (player.distance.gte(1e12)) tmp.ach[31].grant();
-	if (player.rank.gte(12)) tmp.ach[32].grant();
-	if (player.tier.gte(4)) tmp.ach[33].grant();
+	if (player.rank.gte(13)) tmp.ach[32].grant();
+	if (player.tier.gte(4) && player.rank.gte(32)) tmp.ach[33].grant();
 	if (player.rockets.gte(10)) tmp.ach[34].grant();
 	if (player.rf.gte(3)) tmp.ach[35].grant();
 	if (Object.keys(player.automation.robots).includes("tierbot")) tmp.ach[36].grant();
@@ -33,10 +33,10 @@ function checkR3Ach(){
 
 function checkR4Ach(){
 	if (player.distance.gte(10 * DISTANCES.pc)) tmp.ach[41].grant();
-	if (player.rank.gte(20)) tmp.ach[42].grant();
+	if (player.rank.gte(30)) tmp.ach[42].grant();
 	if (player.tier.gte(5)) tmp.ach[43].grant();
 	if (player.rockets.gte(1e5)) tmp.ach[44].grant();
-	if (player.rf.gte(6)) tmp.ach[45].grant();
+	if (player.rf.gte(5)) tmp.ach[45].grant();
 	if (player.automation.scraps.gte(5000)) tmp.ach[46].grant();
 	if (player.tr.upgrades.length >= 10) tmp.ach[47].grant();
 	if (player.automation.intelligence.gte(1e10)) tmp.ach[48].grant();
@@ -70,7 +70,7 @@ function checkR7Ach(){
 	if (player.dc.unl) tmp.ach[71].grant();
 	if (player.dc.matter.gte(50)) tmp.ach[72].grant();
 	if (player.distance.gte(ExpantaNum.mul(1e140, DISTANCES.uni))) tmp.ach[73].grant();
-	if (player.rockets.gte(1e60)) tmp.ach[74].grant();
+	if (player.rockets.gte(getMinusId() > 0.5 ? 1e47 : 1e60)) tmp.ach[74].grant();
 	if (player.dc.cores.gte(5)) tmp.ach[75].grant();
 	if (player.rockets.gte(1e100)) tmp.ach[76].grant();
 	if (player.automation.scraps.gte(1e80)) tmp.ach[77].grant();

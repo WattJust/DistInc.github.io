@@ -19,7 +19,8 @@ function getRankCheapEff2() {
 function updateTempRankCheapCost(){
 	tmp.rankCheap.fp = new ExpantaNum(1);
 	if (extremeStadiumComplete("spectra")) tmp.rankCheap.fp = tmp.rankCheap.fp.times(EXTREME_STADIUM_DATA.spectra.effect())
-	tmp.rankCheap.bc = new ExpantaNum(30);
+    if (tmp.ach) if (tmp.ach[13].has && modeActive("extreme") && getMinusId() > 0.5) tmp.rankCheap.fp = tmp.rankCheap.fp.times(1.35)
+	tmp.rankCheap.bc = new ExpantaNum(modeActive("extreme") && getMinusId() > 0.5 ? 10:30);
 	tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(
 		ExpantaNum.pow(2, player.rankCheap.div(tmp.rankCheap.fp).max(1).sub(1).pow(2))
 	);
@@ -133,12 +134,16 @@ function updateTempRankCheap() {
 	if (tmp.ach[21].has && modeActive("extreme")) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.tier);
 	if (tmp.ach[34].has && modeActive("extreme")) tmp.rankCheap.free = tmp.rankCheap.free.plus(1);
 	if (player.rf.gt(0) && modeActive("extreme")) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.furnace.upgrades[1]);
+	if (tmp.ach[21].has && getMinusId() > 0.5) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.tier);
+	if (tmp.ach[22].has && getMinusId() > 0.5) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.tierCheap);
+	if (tmp.ach[45].has && getMinusId() > 0.5) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.rf);
 	if (extremeStadiumActive("cranius", 2)) tmp.rankCheap.free = tmp.rankCheap.free.div(10).floor();
 	updateTempRankCheapCost()
 	tmp.rankCheap.can = player.distance.gte(tmp.rankCheap.req);
 	tmp.rankCheap.layer = new Layer("rankCheap", tmp.rankCheap.can, "semi-forced");
 	tmp.rankCheap.pow = new ExpantaNum(1);
-	if (getMinusId() > 0.5) tmp.rankCheap.pow = tmp.rankCheap.pow.div(10)
+	if (tmp.ach[21].has && getMinusId() > 0.5) tmp.rankCheap.pow = tmp.rankCheap.pow.plus(ExpantaNum.mul(0.15, player.achievements.length));
+	if (getMinusId() > 0.5) tmp.rankCheap.pow = tmp.rankCheap.pow.div(modeActive("extreme") ? 1.75 : 10)
 	if (tmp.ach[12].has && modeActive("extreme")) tmp.rankCheap.pow = tmp.rankCheap.pow.plus(ExpantaNum.mul(0.5, player.achievements.length));
 	if (player.tr.upgrades.includes(22) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.rankCheap.pow = tmp.rankCheap.pow.times(player.collapse.cadavers.plus(1).times(10).slog(10).sqrt());

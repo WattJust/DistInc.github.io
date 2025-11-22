@@ -1,8 +1,8 @@
 const SCALING_STARTS = {
 	scaled: {
-		rank: new ExpantaNum(50),
+		rank: new ExpantaNum(19),
 		rankCheap: new ExpantaNum(10),
-		tier: new ExpantaNum(8),
+		tier: new ExpantaNum(3),
 		rf: new ExpantaNum(35),
 		fn: new ExpantaNum(6),
 		bf: new ExpantaNum(15),

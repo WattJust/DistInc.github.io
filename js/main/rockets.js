@@ -47,6 +47,7 @@ function getRocketGainMult() {
 		mult = mult.times(
 			player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2).max(1))
 		);
+	if (player.tr.upgrades.includes(48) && !HCCBA("noTRU") && getMinusId() > 0.5) mult = mult.times(player.amoebas.amount.plus(1).pow(0.03));
 	if (hasCollapseMilestone(6)) mult = mult.times(10);
 	if (hasCollapseMilestone(8)) mult = mult.times(collapseMile8Eff().max(1));
 	if (tmp.pathogens && player.pathogens.unl) mult = mult.times(tmp.pathogens[2].eff().max(1));

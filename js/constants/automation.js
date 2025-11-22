@@ -1,4 +1,4 @@
-const AUTO_UNL = new ExpantaNum(1e12);
+const AUTO_UNL = new ExpantaNum(1e13);
 const ROBOT_REQS = {
 	rankbot: new ExpantaNum(10),
 	rankCheapbot: new ExpantaNum(30),
@@ -48,6 +48,9 @@ const ROBOT_FL = {
 const AUTOMATORS = {
 	furnace: function () {
 		return player.tr.upgrades.includes(21) && modeActive("extreme");
+	},
+	amoebas: function () {
+		return player.tr.upgrades.includes(41) && getMinusId() > 0.5;
 	},
 	pathogens: function () {
 		return tmp.inf.upgs.has("3;4")||tmp.elm.bos.hasHiggs("0;0;0");
@@ -104,6 +107,7 @@ const AUTOMATORS = {
 
 const AUTOMATOR_BORDER = {
 	furnace: "#c4711d",
+	amoebas: "#0f6905",
 	pathogens: "#b6c495",
 	cores: "rgb(184, 0, 82)",
 	robots: "grey",

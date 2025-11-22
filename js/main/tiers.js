@@ -172,7 +172,7 @@ function getTierFP() {
 
 function getTierBaseCost() {
 	let bc = new ExpantaNum(3)
-	if (modeActive("extreme") && player.tier < 2) bc = bc.plus(1);
+	if (modeActive("extreme") && getMinusId() < 0.5 && player.tier < 2) bc = bc.plus(1);
 	if (modeActive("easy") && player.tier < 2) bc = bc.sub(1);
 	bc = bc.plus(getMinusNerf("tierCostAdd"));
 	if (tmp.inf) if (tmp.inf.stadium.active("solaris", 5) || tmp.inf.stadium.active("spaceon", 6)) bc = bc.plus(25);
@@ -183,6 +183,9 @@ function tier2Eff() {
 	let tier = player.tier;
 	if (tier.gte(10)) tier = tier.log10().times(10);
 	return ExpantaNum.pow(1.1, tier);
+}
+function tier4Eff() {
+	return ExpantaNum.pow(1.15, player.tier);
 }
 
 function tier7Eff() {

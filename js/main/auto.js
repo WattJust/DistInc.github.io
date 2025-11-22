@@ -28,8 +28,7 @@ function updateTempAuto() {
 	for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) tmp.rd.mp[Object.keys(ROBOT_REQS)[i]] = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(8)&&!HCCBA("noTRU")) tmp.rd.mp.rankbot = tmp.rd.mp.rankbot.times(tr8Eff());
 	if (player.tr.upgrades.includes(9)&&!HCCBA("noTRU")) tmp.rd.mp.tierbot = tmp.rd.mp.tierbot.times(tr9Eff());
-	if (player.tr.upgrades.includes(19) && modeActive("extreme") && !HCCBA("noTRU"))
-		tmp.rd.mp.rankCheapbot = tmp.rd.mp.rankCheapbot.times(tr19Eff());
+	if (player.tr.upgrades.includes(19) && modeActive("extreme") && !HCCBA("noTRU"))tmp.rd.mp.rankCheapbot = tmp.rd.mp.rankCheapbot.times(tr19Eff());
 }
 
 function getScrapGain() {
@@ -44,9 +43,8 @@ function getScrapGain() {
 
 function getIntelligenceGain() {
 	let gain = player.rank.plus(1).pow(2).times(player.tier.plus(1)).cbrt().div(1000);
-	if (player.rank.gt(20)) gain = gain.times(2);
+	if (player.rank.gt(28)) gain = gain.times(2);
 	if (player.rank.gt(30)) gain = gain.times(3);
-	if (player.tier.gt(4)) gain = gain.times(2);
 	if (player.tier.gt(12)) gain = gain.times(3);
 	if (player.tier.gt(13)) gain = gain.times(4);
 	if (tmp.ach[36].has) gain = gain.times(1.5);
@@ -104,6 +102,9 @@ function furnaceAutoTick(){
 	}
 }
 
+function amoebaAutoTick(){
+	if (player.automators["amoebas"]) tmp.amoebas.maxAll();
+}
 function pathogenAutoTick(){
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll();
 }
@@ -114,7 +115,7 @@ function darkCoreAutoTick(){
 
 function robotAutoTick(){
 	if (player.automators["robots"]) {
-		if (!modeActive("extreme")) if (Object.keys(ROBOT_REQS)[autoRobotTarget]=="rankCheapbot") autoRobotTarget++
+		if (!getMinusId() > 0.5 || !modeActive("extreme") || !modeActive("elemRankCheap")) if (Object.keys(ROBOT_REQS)[autoRobotTarget]=="rankCheapbot") autoRobotTarget++
 		let robot = tmp.auto[Object.keys(ROBOT_REQS)[autoRobotTarget]]
 		if (!robot.unl && player.automation.scraps.gte(ROBOT_REQS[robot.name])) robot.btn()
 		if (robot.unl) tmp.auto[Object.keys(ROBOT_REQS)[autoRobotTarget]].maxAll(true)
@@ -241,6 +242,7 @@ function energyAutoTick(){
 function autoTick(diff) {
 	normalAutoTick(diff)
 	furnaceAutoTick()
+	amoebaAutoTick()
 	pathogenAutoTick()
 	darkCoreAutoTick()
 	robotAutoTick()
@@ -267,6 +269,10 @@ function autoPerSec() {
 	}
 }
 
-function toggleRobot(name) {
+/*function toggleRobot(name) {
 	player.automation.robots[name][2] = !player.automation.robots[name][2]
+}*/
+function toggleRobot(name) {
+    player.automation.robots[name][2] = !player.automation.robots[name][2];
+    updateRobotsHTML();
 }

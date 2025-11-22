@@ -2,6 +2,7 @@ function calcAcceleration(){
 	tmp.acc = new ExpantaNum(0.1);
 	if (modeActive("hard")) tmp.acc = tmp.acc.div(3);
 	if (modeActive("easy")) tmp.acc = tmp.acc.times(2);
+	if (getMinusId() > 0.5) tmp.acc = tmp.acc.plus(secondRocketEffect().pow(0.75));
 	if (player.rank.gt(2)) tmp.acc = tmp.acc.times(rank2Eff());
 	if (player.rank.gt(3)) tmp.acc = tmp.acc.times(2);
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.acc = tmp.acc.times(2);
@@ -9,9 +10,8 @@ function calcAcceleration(){
 	if (player.rank.gt(5)) tmp.acc = tmp.acc.times(rank5Eff());
 	if (player.rank.gt(10)) tmp.acc = tmp.acc.times(2);
 	if (player.tier.gt(3)) tmp.acc = tmp.acc.times(3);
-	if (player.rank.gt(14)) tmp.acc = tmp.acc.times(rank14Eff());
 	if (player.rank.gt(15)) tmp.acc = tmp.acc.times(4);
-	if (player.tier.gt(5)) tmp.acc = tmp.acc.times(5);
+	if (player.rank.gt(36)) tmp.acc = tmp.acc.times(rank36Eff());
 	if (player.rank.gt(25)) tmp.acc = tmp.acc.times(10);
 	if (player.rank.gt(50)) tmp.acc = tmp.acc.times(15);
 	if (player.tier.gt(8)) tmp.acc = tmp.acc.times(10);
@@ -19,7 +19,7 @@ function calcAcceleration(){
 	if (player.rank.gt(75)) tmp.acc = tmp.acc.times(25);
 	if (player.tier.gt(15)) tmp.acc = tmp.acc.times(25);
 	if (tmp.ach) if (tmp.ach[12].has) tmp.acc = tmp.acc.times(1.1);
-	if (tmp.ach) if (tmp.ach[22].has) tmp.acc = tmp.acc.times(1.05);
+	if (tmp.ach) if (tmp.ach[22].has) tmp.acc = tmp.acc.times(1.3333);
 	if (tmp.ach) if (tmp.ach[23].has) tmp.acc = tmp.acc.times(1.2);
 	if (tmp.ach) if (tmp.ach[14].has) tmp.acc = tmp.acc.times(1.5);
 	if (tmp.ach) if (tmp.ach[32].has) tmp.acc = tmp.acc.times(1.8);
@@ -38,10 +38,12 @@ function calcAcceleration(){
 			).max(1)
 		);
 	if (modeActive("extreme") && tmp.acc.gte(Number.MAX_VALUE)) tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(Number.MAX_VALUE, 0.25))
+	if (getMinusId() > 0.5 && tmp.acc.gte(ExpantaNum.mul(1e10, DISTANCES.uni))) {
+    tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(ExpantaNum.mul(1e10, DISTANCES.uni), 0.25))}	
 	if (modeActive("extreme") && tmp.acc.gte("1e10000")) tmp.acc = tmp.acc.sqrt().times(ExpantaNum.sqrt("1e10000"))
 	if (extremeStadiumActive("nullum")) tmp.acc = ExpantaNum.pow(10, tmp.acc.log10().times(0.4-0.05*(extremeStadDiffLevel("nullum")-1)))
 	if (modeActive("hikers_dream") && tmp.hd) tmp.acc = tmp.acc.pow(tmp.hd.inclineRed)
-	if (amomebasUnlocked() && tmp.amoebas) tmp.acc = tmp.acc.times(getAmoebaUpgEffect(1, 0))
+	if (amoebasUnlocked() && tmp.amoebas) tmp.acc = tmp.acc.times(getAmoebaUpgEffect(1, 0))
 }
 
 function calcMaxVelocity(){
@@ -55,8 +57,9 @@ function calcMaxVelocity(){
 	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(rank4Eff());
 	if (player.rank.gt(5)) tmp.maxVel = tmp.maxVel.times(rank5Eff());
 	if (player.rank.gt(8)) tmp.maxVel = tmp.maxVel.times(rank8Eff());
-	if (player.rank.gt(14)) tmp.maxVel = tmp.maxVel.times(rank14Eff());
+	if (player.rank.gt(36)) tmp.maxVel = tmp.maxVel.times(rank36Eff());
 	if (player.rank.gt(55)) tmp.maxVel = tmp.maxVel.times(rank55Eff());
+	if (player.tier.gt(5)) tmp.maxVel = tmp.maxVel.times(32);
 	if (player.tier.gt(9)) tmp.maxVel = tmp.maxVel.times(tier9Eff());
 	if (tmp.pathogens && player.pathogens.unl) tmp.maxVel = tmp.maxVel.times(tmp.pathogens[4].eff());
 	if (tmp.ach) if (tmp.ach[21].has) tmp.maxVel = tmp.maxVel.times(1.1);
@@ -71,7 +74,11 @@ function calcMaxVelocity(){
 	if (nerfActive("nerfMaxVel")) tmp.maxVel = tmp.maxVel.pow(0.1);
 	if (extremeStadiumActive("nullum", 2)) tmp.maxVel = ExpantaNum.pow(10, tmp.maxVel.log10().times(0.9-0.02*(extremeStadDiffLevel("nullum")-2)))
 	if (modeActive("hikers_dream") && tmp.hd) tmp.maxVel = tmp.maxVel.pow(tmp.hd.inclineRed)
-	if (amomebasUnlocked() && tmp.amoebas) tmp.maxVel = tmp.maxVel.times(getAmoebaUpgEffect(1, 1))
+	if (getMinusId() > 0.5 && tmp.maxVel.gte(ExpantaNum.mul(1e30, DISTANCES.uni))) {
+    tmp.maxVel = tmp.maxVel.pow(0.5).times(ExpantaNum.pow(ExpantaNum.mul(1e30, DISTANCES.uni), 0.5))}
+	if (amoebasUnlocked() && tmp.amoebas) tmp.maxVel = tmp.maxVel.times(getAmoebaUpgEffect(1, 1))
+	if (getMinusId() > 0.5 && tmp.maxVel.gte(ExpantaNum.mul(1e50, DISTANCES.uni))) {
+	tmp.maxVel = tmp.maxVel.pow(0.75).times(ExpantaNum.pow(ExpantaNum.mul(1e50, DISTANCES.uni), 0.25))}
 }
 
 function calcAccelerationEnergy(){

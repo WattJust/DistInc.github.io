@@ -3,7 +3,7 @@ function updateTempTierCheapCost() {
 }
 
 function getTierCheapEff() {
-	return player.tierCheap.pow(0.75).times(0.15).plus(1)
+	return player.tierCheap.mul(getAmoebaUpgEffect(2, 1)).pow(0.75).times(0.15).plus(1)
 }
 
 function getTierCheapSecondEff() {

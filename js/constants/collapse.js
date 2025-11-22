@@ -1,8 +1,8 @@
-const COLLAPSE_UNL = new ExpantaNum(50 * DISTANCES.Mpc);
+const COLLAPSE_UNL = new ExpantaNum(1e10 * DISTANCES.uni);
 const ESSENCE_MILESTONES = {
 	1: {
 		req: new ExpantaNum(1),
-		desc: "Time goes by 100x faster, but this gets weaker the further you go (minimum 2x, at 50Mpc).",
+		desc: "Time goes by 100x faster, but this gets weaker the further you go (minimum 2x, at 1e10 uni).",
 		disp: function () {
 			return showNum(collapseMile1Eff()) + "x";
 		}

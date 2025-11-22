@@ -25,6 +25,11 @@ function getTimeCubeGain() {
 	}
 	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))
 		gain = gain.times(player.furnace.coal.plus(1).log10().sqrt().plus(1));
+	if (player.tr.upgrades.includes(36) && !HCCBA("noTRU") && getMinusId() > 0.5)
+		gain = gain.times(player.amoebas.amount.plus(1).log10().plus(1))
+	if (player.tr.upgrades.includes(48) && !HCCBA("noTRU") && getMinusId() > 0.5)
+		gain = gain.times(player.amoebas.amount.plus(1).pow(0.03))
+	if (amoebasUnlocked() && tmp.amoebas && player.tr.upgrades.includes(39)) gain = gain.times(getAmoebaUpgEffect(2, 0))
 	if (tmp.pathogens && player.pathogens.unl) gain = gain.times(tmp.pathogens[3].eff());
 	if (tmp.dc) if (player.dc.unl) gain = gain.times(tmp.dc.deEff);
 	if (tmp.dc) if (player.tr.upgrades.includes(11)) gain = gain.times(tr11Eff()["cg"]);
@@ -42,6 +47,9 @@ function buyTRUpg(n) {
 	if (player.tr.cubes.lt(TR_UPGS[n].cost())) return;
 	player.tr.cubes = player.tr.cubes.sub(TR_UPGS[n].cost());
 	player.tr.upgrades.push(n);
+	if (n === 39) {
+	    updateAmoebaTemp();
+	}
 }
 
 

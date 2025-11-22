@@ -482,10 +482,17 @@
 			</div>
 		</div>
 		<div id="amoebas" class="tab" style="display: none;">
-			You have <span id="amoebaamount"></span> (<span id="amoebaspersec"></span>/s) amoebas, based on your maximum velocity.
-			<br><br>
-			<div id="amoebaUpgrades"></div>
-		</div>
+    You have <span id="amoebaamount"></span> (<span id="amoebaspersec"></span>/s) amoebas, based on your maximum velocity.
+    <br><br>
+    <span id="maxAllAmoebaContainer" style="display: none">
+        <button onclick="tmp.amoebas.maxAll()" class="btn amoeba">Max All</button>
+        <br><br>
+	 <div id="amoebaUpgPow" class="grosstxt"></span>
+    </div>
+    </span>
+    <div id="amoebaUpgrades"></div>
+</div>
+
 		<div id="rockets" class="tab" style="display: none;">
 			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">
 				Reset all previous progress to gain <span id="rocketGain" class="based2"></span> rockets

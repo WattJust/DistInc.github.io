@@ -2,7 +2,7 @@ const LAYER_RESETS = {
 	rank: ["distance", "velocity"],
 	rankCheap: ["distance", "velocity"],
 	tier: ["distance", "velocity", "rank"],
-	tierCheap: ["distance", "velocity", "rank"],
+	tierCheap: [],
 	rockets: ["distance", "velocity", "rank", "tier"],
 	rf: ["rockets"],
 	collapse: ["distance", "velocity", "rank", "tier", "rockets", "rf", "tr"],
@@ -27,20 +27,20 @@ const LAYER_RESETS_EXTRA = {
 	rank: ["energy", "canRefill"],
 	rankCheap: ["energy", "canRefill"],
 	tier: ["energy", "canRefill", "rankCheap"],
-	tierCheap: ["energy", "canRefill", "rankCheap"],
+	tierCheap: [],
 	rockets: ["energy", "canRefill", "rankCheap", "tierCheap"],
 	rf: [],
-	collapse: ["energy", "canRefill", "rankCheap", "furnace", "tierCheap"],
-	inf: ["energy", "canRefill", "rankCheap", "furnace", "activeFC", "tierCheap"],
-	elementary: ["energy", "spentMotive", "energyUpgs", "canRefill", "geners", "genLvl", "spentMotiveGens", "bestMotive", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad", "tierCheap"]
+	collapse: ["energy", "canRefill", "rankCheap", "furnace", "tierCheap", "amoebas"],
+	inf: ["energy", "canRefill", "rankCheap", "furnace", "activeFC", "tierCheap", "amoebas"],
+	elementary: ["energy", "spentMotive", "energyUpgs", "canRefill", "geners", "genLvl", "spentMotiveGens", "bestMotive", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad", "tierCheap", "amoebas"]
 };
 
 const LAYER_REQS = {
 	rank: ["distance", 10],
 	tier: ["rank", 3],
-	rockets: ["distance", 5e7],
+	rockets: ["distance", 2.5e7],
 	rf: ["rockets", 25],
-	collapse: ["distance", 50 * DISTANCES.Mpc],
+	collapse: ["distance", 1e10 * DISTANCES.uni],
 	inf: ["distance", new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)],
 	elementary: [
 		["rockets", new ExpantaNum("1e300000")],
@@ -73,6 +73,7 @@ const LAYER_RESETS_NOTHING = {
 	rank() { return tmp.collapse ? hasCollapseMilestone(12) : false },
 	rankCheap() { return tmp.ach[112].has },
 	tier() { return player.tr.upgrades.includes(14) && !HCCBA("noTRU") },
+	tierCheap() { return false },
 	rockets() { return false },
 	rf() { return modeActive("extreme") ? (player.tr.upgrades.includes(17) && !HCCBA("noTRU")) : player.inf.unl },
 	collapse() { return false },

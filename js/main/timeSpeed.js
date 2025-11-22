@@ -4,7 +4,7 @@ function updateTempTimeSpeed() {
 	if (modeActive("easy")) tmp.timeSpeed = tmp.timeSpeed.times(2.5);
 	if (modeActive("extreme")) tmp.timeSpeed = tmp.timeSpeed.times(0.7);
 	if (modeActive("0xTimeSpeed")) tmp.timeSpeed = tmp.timeSpeed.times(0);
-	if (getMinusId() > -0.5) tmp.timeSpeed = tmp.timeSpeed.times(ExpantaNum.pow(1.065, player.tier.plus(player.rank)).pow(getMinusId() > 0.5 ? getTierCheapSecondEff() : 1));
+	if (getMinusId() > -0.5) tmp.timeSpeed = tmp.timeSpeed.times(ExpantaNum.pow(1.065, player.tier.plus(player.rank).plus((player.rankCheap.plus(player.tierCheap)).times(player.tr.upgrades.includes(38) && !HCCBA("noTRU") && getMinusId() > 0.5 ? 1 : 0))).pow(getMinusId() > 0.5 ? getTierCheapSecondEff() : 1));
 	tmp.timeSpeed = tmp.timeSpeed.div(getMinusNerf("timeSpeed"));
 	if (player.tr.upgrades.includes(2) && !HCCBA("noTRU")) tmp.timeSpeed = tmp.timeSpeed.times(tr2Eff());
 	if (player.tr.upgrades.includes(7) && !HCCBA("noTRU")) tmp.timeSpeed = tmp.timeSpeed.times(tr7Eff());
@@ -33,6 +33,7 @@ function updateTempTimeSpeed() {
 	if (player.rank.gt(500)) tmp.timeSpeed = tmp.timeSpeed.times(1.95);
 	if (player.rank.gt(1000)) tmp.timeSpeed = tmp.timeSpeed.times(1.98);
 	if (player.rank.gt(10000)) tmp.timeSpeed = tmp.timeSpeed.times(2);
+	if (player.tier.gt(4)) tmp.timeSpeed = tmp.timeSpeed.times(tier4Eff());
 	if (player.tier.gt(6)) tmp.timeSpeed = tmp.timeSpeed.times(1.5);
 	if (player.tier.gt(7)) tmp.timeSpeed = tmp.timeSpeed.times(tier7Eff());
 	if (player.tier.gt(16)) tmp.timeSpeed = tmp.timeSpeed.times(1.6);

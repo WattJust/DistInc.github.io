@@ -187,6 +187,7 @@ function getRankFP() {
 	let fp = new ExpantaNum(1);
 	if (player.tier.gt(0)) fp = fp.times(1.25)
 	if (player.tier.gt(2)) fp = fp.times(tier2Eff())
+	if (tmp.ach) if (tmp.ach[13].has && modeActive("extreme") && getMinusId() > 0.5) fp = fp.times(1.125)
 	if (tmp.ach) if (tmp.ach[43].has) fp = fp.times(1.025)
 	if (player.tr.upgrades.includes(3) && !HCCBA("noTRU")) fp = fp.times(1.1 - (modeActive("NG-") ? 0.07 : 0))
 	if (tmp.rankCheap && rankCheapenerUnlocked()) fp = fp.times(getRankCheapEff())
@@ -204,22 +205,40 @@ function getRankBaseCost() {
 }
 
 function rank2Eff() {
-	return ExpantaNum.pow(1.1, player.rank);
+    let base = new ExpantaNum(1.1).plus(player.rank.gt(9) ? rank9Eff() : 0).min(1.5);
+    let eff = ExpantaNum.pow(base, player.rank);
+    if (eff.gt(1e10)) {
+        let softcap = new ExpantaNum(1e10);
+        eff = eff.pow(getMinusId() > 0.5 && !player.rank.gt(79) ? 0.25 : 1).times(softcap.pow(getMinusId() > 0.5 && !player.rank.gt(79) ? 0.75 : 0));
+    }
+    return eff;
 }
+	
 
 function rank4Eff() {
 	return ExpantaNum.pow(3, player.tier);
 }
 
 function rank5Eff() {
-	return ExpantaNum.pow(getMinusId() > 0.5 ? 1.15 : 1.975, player.rank);
+    let base = getMinusId() > 0.5 ? new ExpantaNum(1.15).plus(player.rank.gt(9) ? rank9Eff() : 0).min(1.5) : new ExpantaNum(1.975);
+    let eff = ExpantaNum.pow(base, player.rank);
+    if (eff.gt(1e10)) {
+        let softcap = new ExpantaNum(1e10);
+        eff = eff.pow(getMinusId() > 0.5 && !player.rank.gt(79) ? 0.25 : 1).times(softcap.pow(getMinusId() > 0.5 && !player.rank.gt(79) ? 0.75 : 0));
+    }
+    return eff;
 }
-
 function rank8Eff() {
-	return ExpantaNum.pow(1.1, player.rank);
+    let base = new ExpantaNum(1.1).plus(player.rank.gt(9) ? rank9Eff() : 0).min(1.5);
+    let eff = ExpantaNum.pow(base, player.rank);
+    if (getMinusId() > 0.5 && !player.rank.gt(79)) eff = eff.min(1e10);
+    return eff;
+}
+function rank9Eff() {
+	return ExpantaNum(player.rank.div(100));
 }
 
-function rank14Eff() {
+function rank36Eff() {
 	return ExpantaNum.pow(player.rf.plus(1), 1.6);
 }
 

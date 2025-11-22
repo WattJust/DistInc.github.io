@@ -9,13 +9,14 @@ function ach63Pow() {
 	if (tmp.ach) if (tmp.ach[74].has) pow = pow.times(1.75)
 	if (modeActive("easy")) pow = pow.times(2)
 	if (player.tr.upgrades.includes(24) && !HCCBA("noTRU") && modeActive("extreme")) pow = pow.times(1.75)
+	if (player.tr.upgrades.includes(44) && !HCCBA("noTRU") && getMinusId() > 0.5) pow = pow.times(1.25)
 	return pow
 }
 
 function ach63Eff() {
 	let sc = ach63SC()
 	let pow = ach63Pow()
-	let eff = tmp.timeSpeed ? tmp.timeSpeed.pow(0.025).pow(pow) : new ExpantaNum(1)
+	let eff = tmp.timeSpeed ? tmp.timeSpeed.pow(0.025).times(getMinusId() > 0.5 ? tmp.timeSpeed.pow(0.1).log10() : 1).pow(pow) : new ExpantaNum(1)
 	if (eff.gte(sc)) eff = eff.log10().times(sc.div(sc.log10()))
 	if (player.elementary.sky.unl && tmp.elm) eff = eff.pow(tmp.elm.sky.pionEff[9])
 	return eff

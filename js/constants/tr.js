@@ -1,7 +1,7 @@
 const TR_UPGS = {
 	1: {
 		cost: function(){
-			return new ExpantaNum(50)
+			return new ExpantaNum(getMinusId() > 0.5 ? 10 : 50)
 		},
 		desc: "Increase Time Cube gain by 10% for each Rank or Tier.",
 		current: function () {
@@ -13,7 +13,7 @@ const TR_UPGS = {
 	},
 	2: {
 		cost: function(){
-			return new ExpantaNum(300)
+			return new ExpantaNum(getMinusId() > 0.5 ? 100 :300)
 		},
 		desc: "Time goes by (log(n+1)) times faster, where n is your Time Cubes.",
 		current: function () {
@@ -36,7 +36,7 @@ const TR_UPGS = {
 			return showNum(x) + "x";
 		}
 	},
-	5: { cost: function(){return new ExpantaNum(15000)}, desc: "Rocket Fuel is 10% stronger." },
+	5: { cost: function(){return new ExpantaNum(getMinusId() > 0.5 ? 10000 : 15000)}, desc: "Rocket Fuel is 10% stronger." },
 	6: {
 		cost: function(){
 			return new ExpantaNum(25000)
@@ -99,7 +99,7 @@ const TR_UPGS = {
 	},
 	11: {
 		cost: function(){
-			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e70 : 1e60)
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e70 : getMinusId() > 0.5 ? 1e67 : 1e60)
 		},
 		desc: "Time Cubes and Dark Flow boost each other, and Scaled Rank scaling starts 10 Ranks later.",
 		current: function () {
@@ -123,7 +123,7 @@ const TR_UPGS = {
 	},
 	13: {
 		cost: function(){
-			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e115 : 1e105)
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e115 : getMinusId() > 0.5 ? 1e90 : 1e105)
 		},
 		desc: "Each component of The Dark Circle boosts Pathogen Upgrade efficiency.",
 		current: function () {
@@ -135,7 +135,7 @@ const TR_UPGS = {
 	},
 	14: {
 		cost: function(){
-			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e123 : 1e115)
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e123 : getMinusId() > 0.5 ? 1e95 : 1e115)
 		},
 		desc:
 			"Tiers do not reset anything, Scaled Tier scaling starts later based on your Dark Cores, and Tiers boost Cadaver gain.",
@@ -148,7 +148,7 @@ const TR_UPGS = {
 	},
 	15: {
 		cost: function(){
-			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e127 : 4.56e123)
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e127 : getMinusId() > 0.5 ? 1e100 : 4.56e123)
 		},
 		desc:
 			"Scaled Rank scaling starts 32 Ranks later, and all effects of The Dark Circle are stronger based on your Dark Cores.",
@@ -340,5 +340,145 @@ const TR_UPGS = {
 		}, 
 		desc: "Furnace Upgrade 4 works in Furnace Challenges, but it is weaker in them." 
 	},
-};
+	36: {
+		cost: function(){
+			return new ExpantaNum(1)
+		},
+		desc: "Time Cube & Amoeba boost each other.",
+		current: function () {
+			return { tc: player.amoebas.amount.plus(1).log10().plus(1), am: player.tr.cubes.plus(1) };
+		},
+		disp: function (g) {
+			return "Cubes: " + showNum(g.tc) + "x, Amoeba: " + showNum(g.am) + "x";
+		}
+	},
+	37: {
+		cost: function(){
+			return new ExpantaNum(5)
+		},
+		desc: "Row 2 Amoeba upgrades are stronger based on your Time Cubes.",
+		current: function () {
+			return player.tr.cubes.plus(1).times(10).slog(2);
+		},
+		disp: function (x) {
+			return "^" + showNum(x)  ;
+		}
+	},
+	38: {
+		cost: function(){
+			return new ExpantaNum(320)
+		},
+		desc: "Second Tier Cheapener effect also counts Rank Cheapener and Tier Cheapener.",
+	},
+	39: {
+		cost: function(){
+			return new ExpantaNum(2e4)
+		},
+		desc: "Unlock new row of Amoeba upgrades.",		
+	},
+	40: {
+		cost:function(){
+			return new ExpantaNum(2.5e5)
+		},
+		desc: "Time speed boost Amoeba gain at reduced rate.",
+		current: function () {
+			return tmp.timeSpeed.plus(1).pow(tmp.ach[74].has ? 0.6 : 0.4);
+		},
+		disp: function (x) {
+			return showNum(x) + "x";
+		}
+	},
+	41: { cost: function(){ return new ExpantaNum(1e33)}, desc: "Unlock Auto-Amoeba upgrades and Amoeba gain is raised to 1.1." },
+	42: {
+		cost: function(){
+			return new ExpantaNum(1e34)}, desc: "The upgrade above also affects Amoeba Upgrade 2,0(row 3 column 1).",
+	},
+	43: {
+		cost: function(){
+			return new ExpantaNum(1e40)
+		},
+		desc: "Amoeba boost Pathogen gain.",
+		current: function () {
+			return player.amoebas.amount.add(1).log10().pow(0.4);
+		},
+		disp: function (x) {
+			return showNum(x) + "x";
+		}
+	},
+	44: { cost: function(){return new ExpantaNum(1e42)}, desc: "The 'Time Doesnt Exist' achievement effect is 25% stronger." },
+	45: { cost: function(){
+		return new ExpantaNum(1e45)
+	}, 
+	desc: "Pathogen boost Cadaver gain.",
+        current: function () {
+			return player.pathogens.amount.add(1).log10().pow(1.25);
+		},
+		disp: function (x) {
+			return showNum(x) + "x";
+		}
+	},
+	46: {
+		cost: function(){
+			return new ExpantaNum(1e107)
+		},
+		desc: "Amoeba is raised to a power based on Dark Flow.",
+		current: function () {
+			let ret = tmp.dc.flow.max(1).times(10).slog(10).pow(1.5).div(10).plus(1);
+			return ret;
+		},
+		disp: function (x) {
+			return "^" + showNum(x);
+		}
+	},
+	47: {
+		cost: function(){
+			return new ExpantaNum(1e118)
+		},
+		desc: "Amoeba boosts Pathogen Upgrade Power.",
+		current: function () {
+			let ret = player.amoebas.amount.plus(1).times(10).slog(10).sub(1).div(10).max(0);
+			if (player.tr.upgrades.includes(32)) return player.amoebas.amount.plus(1).log10().plus(1).log10().div(7.5).max(ret).times(1.04);
+			else return ret
+		},
+		disp: function (x) {
+			return "+" + showNum(x.times(100)) + "%";
+		}
+	},
+	48: {
+		cost: function(){
+			return new ExpantaNum(1e125)
+		},
+		desc: "Amoeba boosts Rocket and Time Cubes gain.",
+		current: function () {
+			return player.amoebas.amount.plus(1).pow(0.03);
+		},
+		disp: function (x) {
+			return showNum(x) + "x";
+		}
+	},
+	49: {
+		cost: function(){
+			return new ExpantaNum(1e134)
+		},
+		desc: "Dark Matter & Amoeba boost Amoeba gain.",
+		current: function () {
+			return player.amoebas.amount.plus(1).times(10).logBase(10).pow(player.dc.matter.plus(1).times(10).log(10).pow(0.7).max(1));
+		},
+		disp: function (x) {
+			return showNum(x) + "x";
+		}
+	},
+	50: {
+		cost: function(){
+			return new ExpantaNum(1e139)
+		},
+		desc: "Amoeba & Pathogen boosts Amoeba Upgrade Power.",
+		current: function () {
+			return player.amoebas.amount.plus(1).logBase(2).pow(player.pathogens.amount.plus(1).times(10).log(2).max(1)).slog(4).sub(1).div(4.75).max(0);
+		},
+		disp: function (x) {
+			return "+" + showNum(x.times(100)) + "%";
+		}
+	},
+}
 const TR_UPG_AMT = Object.keys(TR_UPGS).length;

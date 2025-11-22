@@ -15,6 +15,7 @@ class Layer {
 		let nr = req[1];
 		if (tmp[this.tName].lrm !== undefined) nr = new ExpantaNum(req[1]).times(tmp[this.tName].lrm);
 		let gain = player[req[0]].div(nr).pow(LAYER_FP[this.name]);
+		if (this.name == "collapse") gain = gain.div(getMinusNerf("cadaverGain")).plus(gain.gte(1)?1:0)
 		if (modeActive("extreme+hikers_dream") && player.achievements.includes(38) && this.name == "collapse") gain = gain.times(Math.max(player.energyUpgs.length, 1)**2)
 		let sc = new ExpantaNum(LAYER_SC[this.name]);
 		if (tmp[this.tName].sc !== undefined) sc = tmp[this.tName].sc;

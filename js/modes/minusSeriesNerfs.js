@@ -5,13 +5,19 @@ const minusSeriesNerfs = {
 
 	timeSpeed: [1, 4, 32],
 
-	rocketRequirement: [1, 1.5, 4], 
+	rocketRequirement: [1, 1.5, 20], 
 	rocketEffect: [1, 2, 4],
 	fuelEffect: [1, 1, 1 / 4],
 	secondaryEffectExponent: [0, 0.5, 0.65],
 
 	cubeGain: [1, 10, 100],
 	vanillaTimeUpgrades: [1, 1.3],
+
+	cadaverGain: [1, 2, 4],
+    
+	PathogenRequirement: [1, 2.5, 2],
+	PathogenGain: [1, 3, 10],
+	PathogenUpgrades: [1, 0.8, 0.7],
 
 	preInfGen: [1, 1, 0.85]
 }

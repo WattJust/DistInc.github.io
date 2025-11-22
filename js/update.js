@@ -23,7 +23,7 @@ function updateTemp() {
 
 	if (rankCheapenerUnlocked()) updateTempRankCheap();
 	if (tierCheapenerUnlocked()) updateTempTierCheap();
-	if (amomebasUnlocked()) updateAmoebaTemp();
+	if (amoebasUnlocked()) updateAmoebaTemp();
 	
 	if (modeActive("hikers_dream")) updateTempHikersDream()
 }
@@ -63,7 +63,7 @@ function setupHTML() {
 	}
 	table += "</div></div>"
 	rankTable.setHTML(table)
-
+	
 	// Time Reversal Upgrade Table
 	let trTable = new Element("trTable");
 	table = "";
