@@ -21,6 +21,7 @@ function getScalingStart(type, name) {
 		if (type=="scaled") {
 			if (player.tr.upgrades.includes(11) && !HCCBA("noTRU")) start = start.plus(10)
 			if (player.tr.upgrades.includes(15) && !HCCBA("noTRU")) start = start.plus(32)
+			if (player.tr.upgrades.includes(55) && getMinusId() > 0.5 && !HCCBA("noTRU")) start = start.plus(player.amoebas.amount.plus(1).log10().plus(1).log10().times(5))
 			if (tmp.inf) if (tmp.inf.upgs.has("1;6")) start = start.plus(2)
 			if (nerfActive("scaledRank")) start = new ExpantaNum(1)
 		} else if (type=="superscaled") {

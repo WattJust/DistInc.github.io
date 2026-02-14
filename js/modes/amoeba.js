@@ -2,10 +2,13 @@ function getAmoebaGain() {
 	gain=tmp.maxVel.plus(1).logBase(10).pow(0.25).div(tmp.ach[28].has ? 1 : 5).plus(1).pow(getAmoebaUpgEffect(0, 0)).minus(1)
 	if (player.tr.upgrades.includes(36) && !HCCBA("noTRU")) gain=gain.times(player.tr.cubes.plus(1))
 	if (player.tr.upgrades.includes(40) && !HCCBA("noTRU")) gain=gain.times(tmp.timeSpeed.plus(1).pow(tmp.ach[74].has ? 0.6 : 0.4))	
-		gain=gain.times(getAmoebaUpgEffect(2, 2))
+    gain=gain.times(getAmoebaUpgEffect(2, 2))
 	if (player.tr.upgrades.includes(49) && !HCCBA("noTRU")) gain=gain.times(player.amoebas.amount.plus(1).times(10).logBase(10).pow(player.dc.matter.plus(1).times(10).log(10).pow(0.7).max(1)))
+	if (tmp.ach[82].has) gain=gain.times(player.inf.knowledge)
+	if (player.tr.upgrades.includes(55) && !HCCBA("noTRU")) gain=gain.times(ExpantaNum.pow(1.25, player.rank))
 	if (player.tr.upgrades.includes(41) && !HCCBA("noTRU")) gain=gain.pow(1.1)
 	if (player.tr.upgrades.includes(46) && !HCCBA("noTRU")) gain=gain.pow(tmp.dc.flow.max(1).times(10).slog(10).pow(1.5).div(10).plus(1))
+	if (player.tr.upgrades.includes(53) && !HCCBA("noTRU")) gain=gain.pow(ExpantaNum.pow(1.01, player.inf.endorsements))
 	 return gain
 }
 
@@ -103,6 +106,8 @@ function updateAmoebaTemp() {
 	tmp.amoebas.upgPow = new ExpantaNum(1); 
 	if (player.tr.upgrades.includes(50) && !HCCBA("noTRU")) tmp.amoebas.upgPow = tmp.amoebas.upgPow.plus(player.amoebas.amount.plus(1).logBase(2).pow(player.pathogens.amount.plus(1).times(10).log(2).max(1)).slog(4).sub(1).div(4.75).max(0));
     if (tmp.dc && tmp.ach[77].has) tmp.amoebas.upgPow = tmp.amoebas.upgPow.plus(tmp.dc.coreEff.max(0));
+	if (player.rank.gt(169)) tmp.amoebas.upgPow = tmp.amoebas.upgPow.plus(0.1);
+	if (player.tr.upgrades.includes(52) && !HCCBA("noTRU")) tmp.amoebas.upgPow = tmp.amoebas.upgPow.plus(player.inf.knowledge.plus(1).times(10).slog(2).sub(1).div(10).max(0))
 
 	if (tmp.amoebas.upgPow.gte(10)) 
 		tmp.amoebas.upgPow = tmp.amoebas.upgPow.sqrt().times(Math.sqrt(10));

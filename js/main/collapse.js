@@ -61,6 +61,7 @@ function updateTempCollapse() {
 	if (!tmp.collapse) {
 		tmp.collapse = {};
 		tmp.collapse.onReset = function (prev) {
+			if (tmp.ach[81].has && getMinusId() > 0.5) player.tierCheap = new ExpantaNum(prev.tierCheap)
 			if (hasCollapseMilestone(3)) player.rockets = new ExpantaNum(10);
 			if (hasCollapseMilestone(4)) player.rf = new ExpantaNum(1);
 			if (hasCollapseMilestone(7)) player.tr.upgrades = prev.tr.upgrades;
@@ -108,14 +109,14 @@ function collapseMile10Eff() {
 }
 
 function getCadaverGainMult() {
-	let mult = new ExpantaNum(1);
+    let mult = new ExpantaNum(1);
 	if (hasCollapseMilestone(5)) mult = mult.times(collapseMile5Eff());
 	if (hasCollapseMilestone(10)) mult = mult.times(collapseMile10Eff());
 	if (tmp.ach[38].has) mult = mult.times(2);
 	if (tmp.ach[65].has) mult = mult.times(1.4);
 	if (tmp.ach[131].has) mult = mult.times(2);
 	if (player.tr.upgrades.includes(14) && !HCCBA("noTRU")) mult = mult.times(tr14Eff()["cd"]);
-	if (player.tr.upgrades.includes(45) && getMinusId() > 0.5 && !HCCBA("noTRU")) mult = mult.times(player.pathogens.amount.add(1).log10().pow(1.25));
+	if (player.tr.upgrades.includes(45) && getMinusId() > 0.5 && !HCCBA("noTRU")) mult = mult.times(player.pathogens.amount.add(10).log10().pow(1.25));
 	if (tmp.inf) if (tmp.inf.upgs.has("3;2")) mult = mult.times(INF_UPGS.effects["3;2"]()["cadavers"]);
 	if (tmp.collapse) if (modeActive("extreme") && (tmp.collapse.layer.gain.gte(10) || (tmp.clghm && tmp.collapse.layer.gain.gte(5)))) {
 		mult = mult.div(2);

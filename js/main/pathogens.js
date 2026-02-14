@@ -28,6 +28,7 @@ function updatePathogensGain(){
 	tmp.pathogens.gain = tmp.pathogens.gain.times(pathogenUpg5Eff());
 	if (player.tr.upgrades.includes(25)&&modeActive("extreme")) tmp.pathogens.gain = tmp.pathogens.gain.times(5)
 	if (player.tr.upgrades.includes(43) && getMinusId() > 0.5) tmp.pathogens.gain = tmp.pathogens.gain.times(player.amoebas.amount.add(1).log10().pow(0.4))
+	if (player.tr.upgrades.includes(43) && getMinusId() > 0.5) tmp.pathogens.gain = tmp.pathogens.gain.times(player.inf.knowledge.plus(1).logBase(4).plus(1).logBase(4).plus(1).pow(player.inf.endorsements.sqrt()))
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.ferm.quarkR("strange").max(1));
@@ -51,6 +52,7 @@ function updateTempPathogens() {
 			TR_UPGS[27].current()
 		);
 	if (player.tr.upgrades.includes(47) && getMinusId() > 0.5 && !HCCBA("noTRU")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(player.amoebas.amount.plus(1).times(10).slog(10).sub(1).div(10).max(0))
+	if (player.tr.upgrades.includes(52) && !HCCBA("noTRU")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(player.inf.knowledge.plus(1).times(10).slog(2).sub(1).div(10).max(0))
 	if (modeActive("hard")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.98);
 	if (modeActive("easy")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(1.089);
 	if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.dc.coreEff.max(0));

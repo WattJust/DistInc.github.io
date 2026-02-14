@@ -263,6 +263,7 @@ function updateTimeReversalHTML(){
 		tmp.el.trRow8.setDisplay(getMinusId() > 0.5);
 		tmp.el.trRow9.setDisplay(getMinusId() > 0.5 && tmp.ach[62].has);
 		tmp.el.trRow10.setDisplay(getMinusId() > 0.5 && player.dc.cores.gt(1));
+		tmp.el.trRow11.setDisplay(getMinusId() > 0.5 && player.inf.endorsements.gte(6));
 	}
 }
 

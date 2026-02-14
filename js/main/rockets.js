@@ -88,6 +88,7 @@ function updateTempRockets() {
 	if (modeActive("extreme") && tmp.fn) tmp.rockets.clPow = tmp.fn.gain.plus(1).log10().pow(getRocketEffect()).plus(1);
 	if (!tmp.rockets.onReset) tmp.rockets.onReset = function (prev) {
 		if (modeActive('extreme')) if (tmp.ach[14].has) player.rankCheap = new ExpantaNum(1)
+		if (tmp.ach[81].has && getMinusId() > 0.5) player.tierCheap = new ExpantaNum(prev.tierCheap)
 		tmp.inf.derv.resetDervs();
 	};
 }

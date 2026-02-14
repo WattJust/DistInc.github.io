@@ -28,6 +28,7 @@ const RANK_DESCS = {
 	111: "double intelligence gain for each rank up.",
 	125: "time goes by 50% faster.",
 	150: "time goes by 55% faster.",
+	169: "Amoeba Upgrades are 10% stronger.",
 	175: "time goes by 60% faster.",
 	200: "time goes by 70% faster.",
 	250: "time goes by 80% faster.",

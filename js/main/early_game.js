@@ -71,13 +71,14 @@ function calcMaxVelocity(){
 	if (tmp.inf && tmp.timeSpeed) if (tmp.inf.upgs.has("4;7")) tmp.maxVel = tmp.maxVel.times(INF_UPGS.effects["4;7"]());
 	if (tmp.inf) if (tmp.inf.upgs.has("7;7")) tmp.maxVel = tmp.maxVel.times(INF_UPGS.effects["7;7"]()["ve"]);
 	if (tmp.rockets) tmp.maxVel = tmp.maxVel.times(tmp.rockets.mvPow);
+	if (tmp.ach) if (tmp.ach[82].has && getMinusId() > 0.5) tmp.maxVel = tmp.maxVel.times(player.inf.knowledge)
 	if (nerfActive("nerfMaxVel")) tmp.maxVel = tmp.maxVel.pow(0.1);
 	if (extremeStadiumActive("nullum", 2)) tmp.maxVel = ExpantaNum.pow(10, tmp.maxVel.log10().times(0.9-0.02*(extremeStadDiffLevel("nullum")-2)))
 	if (modeActive("hikers_dream") && tmp.hd) tmp.maxVel = tmp.maxVel.pow(tmp.hd.inclineRed)
 	if (getMinusId() > 0.5 && tmp.maxVel.gte(ExpantaNum.mul(1e30, DISTANCES.uni))) {
     tmp.maxVel = tmp.maxVel.pow(0.5).times(ExpantaNum.pow(ExpantaNum.mul(1e30, DISTANCES.uni), 0.5))}
 	if (amoebasUnlocked() && tmp.amoebas) tmp.maxVel = tmp.maxVel.times(getAmoebaUpgEffect(1, 1))
-	if (getMinusId() > 0.5 && tmp.maxVel.gte(ExpantaNum.mul(1e50, DISTANCES.uni))) {
+	if (getMinusId() > 0.5 && tmp.maxVel.gte(ExpantaNum.mul(1e50, DISTANCES.uni)) && (tmp.ach) && !(tmp.ach[85].has)) {
 	tmp.maxVel = tmp.maxVel.pow(0.75).times(ExpantaNum.pow(ExpantaNum.mul(1e50, DISTANCES.uni), 0.25))}
 }
 

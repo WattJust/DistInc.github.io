@@ -19,7 +19,9 @@ const minusSeriesNerfs = {
 	PathogenGain: [1, 3, 10],
 	PathogenUpgrades: [1, 0.8, 0.7],
 
-	preInfGen: [1, 1, 0.85]
+	InfinityUpgrades: [1, 0.95, 0.85],
+
+	AllGen: [1, 1, 0.85] //actually affects preInf, PreElem and PostElem
 }
 
 function getMinusId() { // usually comparisons use <id>-0.5 because rounding idk

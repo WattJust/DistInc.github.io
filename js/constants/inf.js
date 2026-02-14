@@ -364,7 +364,7 @@ const INF_UPGS = {
 	},
 	repeals: {
 		"2;2": ["1;2", "2;1"],
-		"2;3": ["3;2"],
+		"2;3": ["2;1"],
 		"2;4": ["3;2"],
 		"3;2": ["2;1"],
 		"3;3": ["2;2"],
@@ -373,10 +373,10 @@ const INF_UPGS = {
 	},
 	repealed: {
 		"1;2": ["2;2"],
-		"2;1": ["2;2", "3;2"],
+		"2;1": ["2;2", "3;2", "2;3"],
 		"2;2": ["3;3"],
 		"2;3": ["4;2"],
-		"3;2": ["2;3", "2;4"],
+		"3;2": ["2;4"],
 		"4;1": ["5;5"],
 		"5;1": ["5;5"]
 	},
@@ -384,7 +384,7 @@ const INF_UPGS = {
 		"1;1": function () {
 			if (nerfActive("noInf1;1") || extremeStadiumActive("spectra", 5)) return new ExpantaNum(1);
 			let total = player.rank.plus(player.tier.pow(2));
-			let exp = new ExpantaNum(3);
+			let exp = new ExpantaNum(3).times(getMinusNerf("InfinityUpgrades"));
 			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54))
 			if (tmp.inf) if (tmp.inf.stadium.completed("spaceon")) exp = exp.times(STADIUM_REWARDS.effects.spaceon());
 			let ret = total.plus(1).pow(exp);
@@ -392,7 +392,7 @@ const INF_UPGS = {
 		},
 		"1;2": function () {
 			let exp = player.inf.knowledge.plus(1).slog(2);
-			let ret = player.inf.knowledge.plus(1).log10().plus(1).pow(exp);
+			let ret = player.inf.knowledge.plus(1).log10().plus(1).pow(exp).pow(getMinusNerf("InfinityUpgrades"));
 			return ret;
 		},
 		"1;8": function () {
@@ -414,12 +414,12 @@ const INF_UPGS = {
 			return ret
 		},
 		"2;1": function () {
-			let ret = player.inf.knowledge.plus(1).slog(10).sqrt();
+			let ret = player.inf.knowledge.plus(1).slog(10).sqrt().times(getMinusNerf("InfinityUpgrades"));
 			if (ret.gte(1.1)) ret = ret.pow(0.001).times(ExpantaNum.pow(1.1, 0.999));
 			return ret.max(1);
 		},
 		"2;2": function () {
-			let ret = tmp.timeSpeed ? tmp.timeSpeed.log10().plus(1) : new ExpantaNum(1);
+			let ret = tmp.timeSpeed ? tmp.timeSpeed.log10().plus(1).pow(getMinusNerf("InfinityUpgrades")) : new ExpantaNum(1);
 			if (modeActive('extreme')) ret = ret.div(2).max(1)
 			return ret;
 		},
@@ -427,8 +427,8 @@ const INF_UPGS = {
 			let exp = new ExpantaNum(1);
 			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]());
 			let pow = {
-				knowledge: player.tr.cubes.plus(1).slog(10).plus(1).log10().times(exp),
-				cubes: player.inf.knowledge.plus(1).slog(2).plus(1).log10().times(exp)
+				knowledge: player.tr.cubes.plus(1).slog(10).plus(1).log10().times(exp).times(getMinusNerf("InfinityUpgrades")),
+				cubes: player.inf.knowledge.plus(1).slog(2).plus(1).log10().times(exp).times(getMinusNerf("InfinityUpgrades"))
 			};
 			return {
 				knowledge: player.tr.cubes.plus(1).log10().plus(1).log10().plus(1).pow(pow.knowledge),
@@ -449,8 +449,8 @@ const INF_UPGS = {
 			let exp = new ExpantaNum(1);
 			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]());
 			let pow = {
-				knowledge: player.collapse.cadavers.plus(1).slog(2).plus(1).log10().times(exp),
-				cadavers: player.inf.knowledge.plus(1).slog(10).plus(1).log10().times(exp)
+				knowledge: player.collapse.cadavers.plus(1).slog(2).plus(1).log10().times(exp).times(getMinusNerf("InfinityUpgrades")),
+				cadavers: player.inf.knowledge.plus(1).slog(10).plus(1).log10().times(exp).times(getMinusNerf("InfinityUpgrades"))
 			};
 			return {
 				knowledge: player.collapse.cadavers.plus(1).log10().plus(1).log10().plus(1).pow(pow.knowledge),
@@ -490,12 +490,12 @@ const INF_UPGS = {
 			return ret
 		},
 		"5;4": function () {
-			let ret = player.collapse.cadavers.plus(1).log10().plus(1).sqrt();
+			let ret = player.collapse.cadavers.plus(1).log10().plus(1).sqrt().pow(getMinusNerf("InfinityUpgrades"));
 			return ret;
 		},
 		"5;5": function () {
 			let base = player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1);
-			let exp = player.inf.endorsements.sqrt();
+			let exp = player.inf.endorsements.sqrt().times(getMinusNerf("InfinityUpgrades"));
 			if (modeActive("extreme")) exp = exp.times(1.5)
 			let ret = base.pow(exp);
 			return ret;

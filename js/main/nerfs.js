@@ -179,7 +179,7 @@ function adjustGen(val, type) {
 		if (extremeStadiumActive("spectra")) e = e.pow(2)
 		exp = exp.times(e);
 	}
-	exp = exp.times(getMinusNerf("preInfGen"))
+	exp = exp.times(getMinusNerf("AllGen"))
 	if (modeActive("extreme") && post_elem && type!="scalar") exp = exp.times(ExpantaNum.gte(player.elementary.theory.tree.upgrades[37]||0, 1)?.95:.9)
 	let newVal = val.pow(exp);
 	if (modeActive("hard") && (type=="inflatons"||type=="foam"||type=="sky")) newVal = newVal.div(5)

@@ -479,6 +479,74 @@ const TR_UPGS = {
 		disp: function (x) {
 			return "+" + showNum(x.times(100)) + "%";
 		}
+	},	
+	51: {
+		cost: function(){
+			return new ExpantaNum(1e260)
+		},
+		desc: "Amoeba boost Knowledge gain.",
+		current: function () {
+			return player.amoebas.amount.plus(1).pow(0.01).logBase(10).pow(2).max(1);
+		},
+		disp: function (x) {
+			return showNum(x) + "x";
+		}
+	},
+	52: {
+		cost: function(){
+			return new ExpantaNum('1e370')
+		},
+		desc: "Knowledge boosts Amoeba and Pathogen Upgrade Power.",
+		current: function () {
+			let ret = player.inf.knowledge.plus(1).times(10).slog(2).sub(1).div(10).max(0);
+			if (player.tr.upgrades.includes(32)) return player.amoebas.amount.plus(1).log10().plus(1).log10().div(7.5).max(ret).times(1.04);
+			else return ret
+		},
+		disp: function (x) {
+			return "+" + showNum(x.times(100)) + "%";
+		}
+	},
+	53: {
+		cost: function(){
+			return new ExpantaNum('1e450')
+		},
+		desc: "Endorsments boost Amoeba gain.",
+		current: function () {
+			return ExpantaNum.pow(1.01, player.inf.endorsements);
+		},
+		disp: function (x) {
+			return "^" + showNum(x)  ;
+		}
+	},
+	54: {
+		cost: function(){
+			return new ExpantaNum('1e490')
+		},
+		desc: "Knowledge & Endorsements boost Pathogen gain.",
+		current: function () {
+			let base = player.inf.knowledge.plus(1).logBase(4).plus(1).logBase(4).plus(1);
+			let exp = player.inf.endorsements.sqrt();
+			let ret = base.pow(exp);
+			return ret;
+		},
+		disp: function (x) {
+			return showNum(x) + "x";
+		}
+	},
+	55: {
+		cost: function(){
+			return new ExpantaNum('1e545')
+		},
+		desc: "Scaled Rank scaling starts later based on your Amoebas and Ranks boost Amoeba gain.",
+		current: function () {
+	       return {
+		am: ExpantaNum.pow(1.25, player.rank),
+		ss: player.amoebas.amount.plus(1).log10().plus(1).log10().times(5)
+		}
+		},
+		disp: function (g) {
+			return "Rank scaling: " + showNum(g.ss) + " later, Amoebas: " + showNum(g.am) + "x";
+		}
 	},
 }
 const TR_UPG_AMT = Object.keys(TR_UPGS).length;
