@@ -35,6 +35,26 @@ const AMOEBA_UPGRADE_DATA = [
 			effect: level => ExpantaNum.pow(2, level),
 			desc: effect => `Amoeba boost Amoeba gain<br>Effect: x${showNum(effect)}`,
 			id: 5
-		}	
+		}
+	    ],
+		[	
+		{
+			effect: level => ExpantaNum.pow(2, level),
+			desc: effect => `Amoeba gain is better and Amoeba upgrade 1 is stronger<br>Effect: ^${showNum(effect)}`,
+			id: 6
+		},	
+		{
+			effect: level => ExpantaNum.pow(2, level),
+			desc: effect => `Amoeba upgrade 2 and 3 are stronger<br>Effect: ^${showNum(effect)}`,
+			id: 7
+		},{
+			effect: level => ExpantaNum.pow(2, level),
+			desc: effect => `Amoeba boost Amoeba gain<br>Effect: x${showNum(effect)}`,
+			id: 8
+		},{
+			effect: level => ExpantaNum.pow(2, level),
+			desc: effect => `Amoeba boost Amoeba gain<br>Effect: x${showNum(effect)}`,
+			id: 9
+		}
+		]		
 	]
-]

@@ -1,5 +1,5 @@
 function getAmoebaGain() {
-	gain=tmp.maxVel.plus(1).logBase(10).pow(0.25).div(tmp.ach[28].has ? 1 : 5).plus(1).pow(getAmoebaUpgEffect(0, 0)).minus(1)
+	gain=tmp.maxVel.plus(1).logBase(10).pow(player.amoebas.upgrades[6].gte(1) ? 1 : 0.25).div(tmp.ach[28].has ? 1 : 5).plus(1).pow(getAmoebaUpgEffect(0, 0).pow(getAmoebaUpgEffect(3, 0))).minus(1)
 	if (player.tr.upgrades.includes(36) && !HCCBA("noTRU")) gain=gain.times(player.tr.cubes.plus(1))
 	if (player.tr.upgrades.includes(40) && !HCCBA("noTRU")) gain=gain.times(tmp.timeSpeed.plus(1).pow(tmp.ach[74].has ? 0.6 : 0.4))	
     gain=gain.times(getAmoebaUpgEffect(2, 2))
@@ -17,7 +17,7 @@ function initAmoebaUpgrades() {
         player.amoebas.upgrades = {};
     }
 
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i <= 9; i++) {
         if (player.amoebas.upgrades[i] === undefined) {
             player.amoebas.upgrades[i] = new ExpantaNum(0);
         } else if (!(player.amoebas.upgrades[i] instanceof ExpantaNum)) {
@@ -42,7 +42,15 @@ function getAmoebaUpgCost(id, level) {
 		case 4:
 			return ExpantaNum.pow(10, level.pow(2)).times(1e9)
 		case 5:
-			return ExpantaNum.pow(2, level.pow(2.5)).times(1e20)			
+			return ExpantaNum.pow(2, level.pow(2.5)).times(1e20)
+		case 6:
+			return ExpantaNum.pow(2, level.pow(level.pow(0.5).add(2))).times("1e1900")
+		case 7:
+			return ExpantaNum.pow(10, level.pow(2.5)).times("1e2500")
+		case 8:
+			return ExpantaNum.pow(2, level.pow(2.5)).times("1e10000")
+		case 9:
+			return ExpantaNum.pow(2, level.pow(2.5)).times("1e10000")
 	}
 }
 
@@ -77,6 +85,14 @@ function amoebaUpgradeEffect(id, level) {
 			return effectiveLevel.root(1.333).mul(0.15).plus(1)
 		case 5:
 			return ExpantaNum.pow(player.amoebas.amount.logBase(10), effectiveLevel)
+		case 6:
+		    return ExpantaNum(effectiveLevel.plus(10).logBase(10))
+		case 7:
+			return ExpantaNum(effectiveLevel.pow(0.1).max(1))	
+		case 8:
+			return ExpantaNum(effectiveLevel.times(0.25).plus(1))
+		case 9:
+			return ExpantaNum(effectiveLevel.times(0.25).plus(1))		
 	}
 }
 
@@ -102,6 +118,7 @@ function updateAmoebaTemp() {
 	tmp.amoebas = {}
 	tmp.amoebas.upgrades = {}
 	tmp.amoebas.thirdRowUnlocked = player.tr.upgrades.includes(39)
+	tmp.amoebas.fourthRowUnlocked = tmp.inf && tmp.inf.upgs.has("3;6")
 	
 	tmp.amoebas.upgPow = new ExpantaNum(1); 
 	if (player.tr.upgrades.includes(50) && !HCCBA("noTRU")) tmp.amoebas.upgPow = tmp.amoebas.upgPow.plus(player.amoebas.amount.plus(1).logBase(2).pow(player.pathogens.amount.plus(1).times(10).log(2).max(1)).slog(4).sub(1).div(4.75).max(0));
@@ -110,7 +127,6 @@ function updateAmoebaTemp() {
 	if (player.tr.upgrades.includes(52) && !HCCBA("noTRU")) tmp.amoebas.upgPow = tmp.amoebas.upgPow.plus(player.inf.knowledge.plus(1).times(10).slog(2).sub(1).div(10).max(0))
 
 	if (tmp.amoebas.upgPow.gte(10)) 
-		tmp.amoebas.upgPow = tmp.amoebas.upgPow.sqrt().times(Math.sqrt(10));
 
 	if (amoebasUnlocked()) {
 		let upgPowElem = document.getElementById("amoebaUpgPow");
@@ -124,6 +140,7 @@ function updateAmoebaTemp() {
   
 	for (const i in AMOEBA_UPGRADE_DATA) {
 		if (i == 2 && !tmp.amoebas.thirdRowUnlocked) continue;
+		if (i == 3 && !tmp.amoebas.fourthRowUnlocked) continue;
 		
 		const row = AMOEBA_UPGRADE_DATA[i]
 		tmp.amoebas.upgrades[i] = {}
@@ -150,6 +167,7 @@ function updateAmoebaTemp() {
 			
 			for (let row = 0; row < AMOEBA_UPGRADE_DATA.length; row++) {
 				if (row == 2 && !tmp.amoebas.thirdRowUnlocked) continue;
+				if (row == 3 && !tmp.amoebas.fourthRowUnlocked) continue;
 				
 				for (let col = 0; col < AMOEBA_UPGRADE_DATA[row].length; col++) {
 					const upgrade = AMOEBA_UPGRADE_DATA[row][col];

@@ -39,11 +39,11 @@ function calcAcceleration(){
 		);
 	if (modeActive("extreme") && tmp.acc.gte(Number.MAX_VALUE)) tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(Number.MAX_VALUE, 0.25))
 	if (getMinusId() > 0.5 && tmp.acc.gte(ExpantaNum.mul(1e10, DISTANCES.uni))) {
-    tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(ExpantaNum.mul(1e10, DISTANCES.uni), 0.25))}	
+        tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(ExpantaNum.mul(1e10, DISTANCES.uni), 0.25))}	
 	if (modeActive("extreme") && tmp.acc.gte("1e10000")) tmp.acc = tmp.acc.sqrt().times(ExpantaNum.sqrt("1e10000"))
 	if (extremeStadiumActive("nullum")) tmp.acc = ExpantaNum.pow(10, tmp.acc.log10().times(0.4-0.05*(extremeStadDiffLevel("nullum")-1)))
 	if (modeActive("hikers_dream") && tmp.hd) tmp.acc = tmp.acc.pow(tmp.hd.inclineRed)
-	if (amoebasUnlocked() && tmp.amoebas) tmp.acc = tmp.acc.times(getAmoebaUpgEffect(1, 0))
+	if (amoebasUnlocked() && tmp.amoebas) tmp.acc = tmp.acc.times((getAmoebaUpgEffect(1, 0).pow(getAmoebaUpgEffect(3, 1))))
 }
 
 function calcMaxVelocity(){
@@ -76,10 +76,10 @@ function calcMaxVelocity(){
 	if (extremeStadiumActive("nullum", 2)) tmp.maxVel = ExpantaNum.pow(10, tmp.maxVel.log10().times(0.9-0.02*(extremeStadDiffLevel("nullum")-2)))
 	if (modeActive("hikers_dream") && tmp.hd) tmp.maxVel = tmp.maxVel.pow(tmp.hd.inclineRed)
 	if (getMinusId() > 0.5 && tmp.maxVel.gte(ExpantaNum.mul(1e30, DISTANCES.uni))) {
-    tmp.maxVel = tmp.maxVel.pow(0.5).times(ExpantaNum.pow(ExpantaNum.mul(1e30, DISTANCES.uni), 0.5))}
-	if (amoebasUnlocked() && tmp.amoebas) tmp.maxVel = tmp.maxVel.times(getAmoebaUpgEffect(1, 1))
+        tmp.maxVel = tmp.maxVel.pow(0.5).times(ExpantaNum.pow(ExpantaNum.mul(1e30, DISTANCES.uni), 0.5))}
+	if (amoebasUnlocked() && tmp.amoebas) tmp.maxVel = tmp.maxVel.times((getAmoebaUpgEffect(1, 1).pow(getAmoebaUpgEffect(3, 1))))
 	if (getMinusId() > 0.5 && tmp.maxVel.gte(ExpantaNum.mul(1e50, DISTANCES.uni)) && (tmp.ach) && !(tmp.ach[85].has)) {
-	tmp.maxVel = tmp.maxVel.pow(0.75).times(ExpantaNum.pow(ExpantaNum.mul(1e50, DISTANCES.uni), 0.25))}
+	    tmp.maxVel = tmp.maxVel.pow(0.75).times(ExpantaNum.pow(ExpantaNum.mul(1e50, DISTANCES.uni), 0.25))}
 }
 
 function calcAccelerationEnergy(){

@@ -356,7 +356,7 @@ const TR_UPGS = {
 		cost: function(){
 			return new ExpantaNum(5)
 		},
-		desc: "Row 2 Amoeba upgrades are stronger based on your Time Cubes.",
+		desc: "Amoeba upgrades 2 and 3 are stronger based on your Time Cubes.",
 		current: function () {
 			return player.tr.cubes.plus(1).times(10).slog(2);
 		},
@@ -391,7 +391,7 @@ const TR_UPGS = {
 	41: { cost: function(){ return new ExpantaNum(1e33)}, desc: "Unlock Auto-Amoeba upgrades and Amoeba gain is raised to 1.1." },
 	42: {
 		cost: function(){
-			return new ExpantaNum(1e34)}, desc: "The upgrade above also affects Amoeba Upgrade 2,0(row 3 column 1).",
+			return new ExpantaNum(1e34)}, desc: "The upgrade above also affects Amoeba Upgrade 4.",
 	},
 	43: {
 		cost: function(){

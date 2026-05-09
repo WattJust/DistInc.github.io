@@ -52,6 +52,7 @@ function loadGame() {
 		calcInclines();
 	}
 	if (getMinusId() > 0.5) RANK_DESCS[5] = "increase the acceleration and maximum velocity by 15% for each rank up."
+	if (getMinusId() > 0.5) INF_UPGS.descs["3;6"] = "Pathogen Upgrades softcap 1 later and unlock new row of Amoeba upgrades."
 	interval = setInterval(function () {
 		simulateTime();
 	}, 50);

@@ -502,7 +502,7 @@ const INF_UPGS = {
 		},
 		"5;6": function () {
 			let base = player.inf.knowledge.div(1e9).plus(1).slog(10).plus(1);
-			let exp = player.inf.knowledge.plus(1).log10().plus(1).logBase(13).plus(1);
+			let exp = player.inf.knowledge.plus(1).log10().plus(1).logBase(13).times(getMinusNerf("InfinityUpgrades")).plus(1);
 			let ret = base.pow(exp);
 			if (ret.lt(9)) ret = ret.sqrt()
 			else ret = ret.div(3)
@@ -520,11 +520,11 @@ const INF_UPGS = {
 			return {pth: ret, hb: ret2}
 		},
 		"6;5": function () {
-			let ret = player.inf.knowledge.plus(1).log10().plus(1).logBase(14).pow(3).plus(1);
+			let ret = player.inf.knowledge.plus(1).log10().plus(1).logBase(14).pow(3).plus(1).pow(getMinusNerf("InfinityUpgrades"));
 			return ret;
 		},
 		"6;6": function () {
-			let ret = tmp.maxVel.plus(1).pow(0.075);
+			let ret = tmp.maxVel.plus(1).pow(0.075).pow(getMinusNerf("InfinityUpgrades"));
 			if (modeActive("extreme")) ret = ret.pow(0.1)
 			if (modeActive("hikers_dream")) ret = ret.pow(2)
 			if (ret.gte("1e1000")) ret = ret.log10().pow(1000 / 3);
